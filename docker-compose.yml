@@ -1,7 +1,7 @@
 version: '2'
 services:
   controller:
-    container_name: whaler
+    container_name: whaler_agent
     build: ./agent
     image: whaler/agent
     restart: on-failure

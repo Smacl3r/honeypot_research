@@ -1,4 +1,4 @@
-FROM python:3.12.0a2-alpine3.16
+FROM python:3-alpine
 
 RUN apk update && apk add docker musl-dev linux-headers gcc
 

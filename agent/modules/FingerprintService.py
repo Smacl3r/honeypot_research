@@ -1,6 +1,6 @@
 import logging, json, os, re
 
-from Configuration import Configuration
+from modules.Configuration import Configuration
 
 from fuzzywuzzy import fuzz
 

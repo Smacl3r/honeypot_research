@@ -1,8 +1,8 @@
 import shutil, logging, json, time, sys, traceback
 
-from Configuration import Configuration
-from BaseContainer import BaseContainer
-from PcapProcessor import PcapProcessor
+from modules.Configuration import Configuration
+from modules.BaseContainer import BaseContainer
+from modules.PcapProcessor import PcapProcessor
 
 logger = logging.getLogger(__name__)
 

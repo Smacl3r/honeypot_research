@@ -1,6 +1,6 @@
 import logging, json, re, sys, datetime
 
-from Configuration import Configuration
+from modules.Configuration import Configuration
 
 from scapy.all import *
 
@@ -94,8 +94,8 @@ class PcapProcessor:
                     
 if __name__ == "__main__":
     fileName=sys.argv[1]
-    print "loading file %s" % fileName
+    print("loading file %s" % fileName)
     report = PcapProcessor('test_container', fileName).getSummaryReport()
     strReport = json.dumps(report, sort_keys=True,indent=4)
-    print strReport
+    print(strReport)
 

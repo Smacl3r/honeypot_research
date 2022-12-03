@@ -1,8 +1,6 @@
 import time, datetime, logging, sys, traceback
 
-import docker
-
-from BaseContainer import BaseContainer
+from modules.BaseContainer import BaseContainer
 from modules.Configuration import Configuration
 
 logger = logging.getLogger(__name__)

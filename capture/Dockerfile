@@ -1,10 +1,10 @@
-FROM python:2-alpine
+FROM python:3-alpine
 
 RUN apk add tcpdump
 
-RUN mkdir ./app
-COPY wrapper.sh ./app
-RUN chmod +x app/wrapper.sh
+RUN mkdir /app
+COPY ./script /app
 
-ENTRYPOINT ["/app/wrapper.sh"]
+#ENTRYPOINT ["tail", "-f", "/dev/null"] 
+ENTRYPOINT ["/bin/sh","/app/wrapper.sh"]
 

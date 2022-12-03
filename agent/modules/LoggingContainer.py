@@ -1,9 +1,7 @@
 import os, logging
 
-import docker
-
-from BaseContainer import BaseContainer
-from Configuration import Configuration
+from modules.BaseContainer import BaseContainer
+from modules.Configuration import Configuration
 
 logger = logging.getLogger(__name__)
 

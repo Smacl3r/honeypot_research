@@ -1,6 +1,6 @@
 import logging, logging.handlers, os
 
-from Configuration import Configuration
+from modules.Configuration import Configuration
 
 LOG_FILE=Configuration().get("dataDirectory") + "/whaler.log"
 

@@ -16,9 +16,9 @@ class Whaler():
 	def __init__(self):
 		logger.info("Initialising Whaler")
 		self.victimCli=docker.DockerClient(base_url=Configuration().get("dockerDaemonVictimUrl"))
-        logger.info("Initialising Whaler 2")
+		logger.info("Initialising Whaler 2")
 		self.hostCli=docker.DockerClient(base_url=Configuration().get("dockerDaemonHostUrl"))
-        logger.info("Initialising Whaler 3")
+		logger.info("Initialising Whaler 3")
 		self.fingerprintService=FingerprintService()
 		self.reports=self.loadReports()
 		

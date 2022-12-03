@@ -47,7 +47,7 @@ First launch a new cloud based Ubuntu image, for example in Azure or AWS. Ensure
 SSH into your new server and execute the following:
 
 ```
-curl https://raw.githubusercontent.com/oncyberblog/whaler/master/get-whaler.sh | sudo sh
+curl https://raw.githubusercontent.com/Smacl3r/honeypot_research/main/get-whaler.sh | sudo sh
 
 ```
 

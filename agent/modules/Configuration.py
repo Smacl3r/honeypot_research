@@ -36,7 +36,7 @@ class Configuration:
                             'captureContainerImage': 'whaler/capture',
                             'victimContainerName': 'whaler_victim',
                             'victimContainerAlias': 'whaler_victim',
-                            'victimContainerImage': 'docker:stable-dind',
+                            'victimContainerImage': 'docker:dind',
                             'victimContainerDisableRedeploy': False,
                             'victimNetworkName': 'whaler_default',
                             'loggingContainerName': 'whaler_logging',

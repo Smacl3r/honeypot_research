@@ -3,6 +3,8 @@ import time, datetime, logging, sys, traceback
 from modules.BaseContainer import BaseContainer
 from modules.Configuration import Configuration
 
+import docker
+
 logger = logging.getLogger(__name__)
 
 class VictimContainer(BaseContainer):
@@ -27,8 +29,8 @@ class VictimContainer(BaseContainer):
 													restart_policy={"Name": "on-failure"},
 													ports={'2375/tcp': 2375},
 													detach=True,
-													dns=['8.8.8.8', '8.8.4.4']
-														
+													dns=['1.1.1.1', '8.8.8.8'],
+													environment=['DOCKER_TLS_CERTDIR=']										
 			)
 			self.container=container
 

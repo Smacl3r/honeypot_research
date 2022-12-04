@@ -1,5 +1,5 @@
 import os, logging
-
+import docker
 from modules.BaseContainer import BaseContainer
 from modules.Configuration import Configuration
 

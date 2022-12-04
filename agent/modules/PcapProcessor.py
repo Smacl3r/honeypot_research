@@ -76,7 +76,7 @@ class PcapProcessor:
                 self.contactedIps[ipAddress]['domain']='unknown'
             
             #remove noise from docker and dns
-            if ipAddress in ['8.8.8.8','8.8.4.4']:
+            if ipAddress in ['1.1.1.1','8.8.8.8']:
                 del(self.contactedIps[ipAddress])
             elif self.contactedIps[ipAddress]['domain'].endswith('docker.com'):
                 del(self.contactedIps[ipAddress])

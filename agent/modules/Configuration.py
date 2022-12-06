@@ -38,7 +38,7 @@ class Configuration:
                             'victimContainerAlias': 'whaler_victim',
                             'victimContainerImage': 'docker:dind',
                             'victimContainerDisableRedeploy': False,
-                            'victimNetworkName': 'whaler_default',
+                            'victimNetworkName': 'honeypot_default',
                             'loggingContainerName': 'whaler_logging',
                             'loggingContainerImage': 'logzio/logzio-docker',
                             'reportFolder': WHALER_DATA_DIR + "/reports"}

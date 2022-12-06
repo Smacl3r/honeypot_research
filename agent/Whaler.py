@@ -16,16 +16,13 @@ class Whaler():
 	def __init__(self):
 		logger.info("Initialising Whaler")
 		self.victimCli=docker.DockerClient(base_url=Configuration().get("dockerDaemonVictimUrl"), version='1.41', timeout=10, tls=False)
-		logger.info("Initialising Whaler 2")
 		self.hostCli=docker.DockerClient(base_url=Configuration().get("dockerDaemonHostUrl"), version='1.41')
-		logger.info("Initialising Whaler 3")
 		self.fingerprintService=FingerprintService()
 		self.reports=self.loadReports()
 		
 
 	def run(self):
 		logger.info("Starting Whaler")
-		
 		self.victimContainer=VictimContainer()
 		self.captureContainer=CaptureContainer()
 

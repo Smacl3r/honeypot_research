@@ -1,3 +1,5 @@
+Code taken, adapted and refactored from https://github.com/oncyberblog/whaler
+
 # Whaler
 
 Whaler is a Docker Daemon honeypot / sandbox. It exposes an insecure Docker Daemon API with the intention of attracting and capturing attempts to run malicious containers.

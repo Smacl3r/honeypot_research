@@ -36,7 +36,7 @@ class Configuration:
                             'captureContainerImage': 'whaler/capture',
                             'victimContainerName': 'whaler_victim',
                             'victimContainerAlias': 'whaler_victim',
-                            'victimContainerImage': 'docker:dind',
+                            'victimContainerImage': 'docker:dind-rootless',
                             'victimContainerDisableRedeploy': False,
                             'victimNetworkName': 'honeypot_default',
                             'loggingContainerName': 'whaler_logging',

@@ -6,5 +6,5 @@ if [ -z $1 ]; then
     exit 1
 else
     echo starting capture with args $@
-    /usr/sbin/tcpdump $@
+    /usr/bin/tcpdump $@
 fi

@@ -1,6 +1,6 @@
 FROM python:3-alpine
 
-RUN apk add tcpdump
+RUN apk --no-cache add tcpdump
 
 RUN mkdir /app
 COPY ./script /app

@@ -5,3 +5,4 @@ scapy
 python-geoip
 python-geoip-geolite2
 netaddr
+python-libpcap

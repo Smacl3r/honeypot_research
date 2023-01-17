@@ -1,4 +1,5 @@
 import logging, json, re, sys, datetime
+from pylibpcap.pcap import sniff
 
 from modules.Configuration import Configuration
 

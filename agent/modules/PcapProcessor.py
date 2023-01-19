@@ -64,7 +64,11 @@ class PcapProcessor:
         
         for ipAddress in self.contactedIps.keys():
             #add geo-location data
-            match = geolite2.lookup(ipAddress)
+            try:
+                match = geolite2.lookup(ipAddress.decode('UTF-8'))
+            except Exception as e:
+                match = False
+                
             if match:
                 self.contactedIps[ipAddress]['country']=match.country
                 self.contactedIps[ipAddress]['continent']=match.continent
@@ -77,18 +81,18 @@ class PcapProcessor:
                 self.contactedIps[ipAddress]['domain']='unknown'
             
             #remove noise from docker and dns
-            if ipAddress in ['1.1.1.1','8.8.8.8']:
-                del(self.contactedIps[ipAddress])
-            elif self.contactedIps[ipAddress]['domain'].endswith('docker.com'):
-                del(self.contactedIps[ipAddress])
-                del(self.dnsRecords[ipAddress])
-            elif self.contactedIps[ipAddress]['domain'].endswith('docker.io'):
-                del(self.contactedIps[ipAddress])
-                del(self.dnsRecords[ipAddress])
+        #     if ipAddress in ['1.1.1.1', '8.8.8.8']:
+        #         del(self.contactedIps[ipAddress])
+        #     elif self.contactedIps[ipAddress]['domain'].endswith('docker.com'):
+        #         del(self.contactedIps[ipAddress])
+        #         del(self.dnsRecords[ipAddress])
+        #     elif self.contactedIps[ipAddress]['domain'].endswith('docker.io'):
+        #         del(self.contactedIps[ipAddress])
+        #         del(self.dnsRecords[ipAddress])
 
-        for dnsRecord in self.dnsRecords.keys():
-            if self.dnsRecords[dnsRecord].endswith('docker.com') or self.dnsRecords[dnsRecord].endswith('docker.io'):
-                del(self.dnsRecords[dnsRecord])
+        # for dnsRecord in self.dnsRecords.keys():
+        #     if self.dnsRecords[dnsRecord].endswith('docker.com') or self.dnsRecords[dnsRecord].endswith('docker.io'):
+        #         del(self.dnsRecords[dnsRecord])
 
         return report
                 

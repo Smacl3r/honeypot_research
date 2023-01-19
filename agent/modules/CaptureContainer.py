@@ -35,8 +35,8 @@ class CaptureContainer(BaseContainer):
 
 	def getPcapFileReport(self, containerName):
 		report = PcapProcessor(containerName, Configuration().get("dataDirectory") + "/capture/capfile").getSummaryReport()
-		strReport = json.dumps(report, sort_keys=True,indent=4)
-		logging.debug(strReport)
+		# strReport = json.dumps(report, sort_keys=True,indent=4)
+		# logging.debug(strReport)
 		return report
 
 	def archiveCaptureFile(self, container, pCapFileStoragePath):

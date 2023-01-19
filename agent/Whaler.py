@@ -103,7 +103,10 @@ class Whaler():
 		
 		if os.path.exists(reportFolder + '/reports.json'):
 			with open(reportFolder + '/reports.json') as json_data_file:
-					reports = json.load(json_data_file)
+					try: 
+						reports = json.load(json_data_file)
+					except Exception as e:
+						reports=[]
 		else:
 			reports=[]
 		
@@ -112,9 +115,12 @@ class Whaler():
 	def saveReport(self, report):
 		reportFolder= Configuration().get("reportFolder")
 		self.reports.append(report)
-		
+
 		with open(reportFolder + '/reports.json', 'w') as outfile:
-			json.dump(self.reports, outfile)
+			try:
+				json.dump(self.reports, outfile)
+			except Exception as e:
+				logger.info("Failed saving reports to file")
 
 if __name__ == '__main__':
 		Whaler().run()

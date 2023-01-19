@@ -2,7 +2,7 @@ docker
 fuzzywuzzy
 python-Levenshtein
 scapy
-python-geoip
+python-geoip-python3
 python-geoip-geolite2
 netaddr
 python-libpcap

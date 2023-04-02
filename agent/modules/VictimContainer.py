@@ -57,17 +57,21 @@ class VictimContainer(BaseContainer):
 					time.sleep(10)
 	
 	def processEvents(self, eventListener):
-		events=self.victimCli.events(decode=True)
-		logger.info("VictimContainer: Connected and streaming Daemon events")
+		try:
+			events=self.victimCli.events(decode=True)
+			logger.info("VictimContainer: Connected and streaming Daemon events")
 
-		for event in events:
-			logger.debug(event)
-			logger.debug("{'timestamp':'%s', source':'VictimContainer', 'action':'DaemonEvent', 'event':%s}" % (datetime.datetime.now().isoformat(),event))
-			if (hasattr( self , "on"+event['Action'].title())):
-				getattr( self , "on"+event['Action'].title())( event, eventListener )
-			else:
-				pass
-				#no action handler found for event type
+			for event in events:
+				logger.debug(event)
+				logger.debug("{'timestamp':'%s', source':'VictimContainer', 'action':'DaemonEvent', 'event':%s}" % (datetime.datetime.now().isoformat(),event))
+				if (hasattr( self , "on"+event['Action'].title())):
+					getattr( self , "on"+event['Action'].title())( event, eventListener )
+				else:
+					pass
+					#no action handler found for event type
+		except Exception:
+			logger.info("VictimContainer: Retrying connection...")
+			time.sleep(2)
 
 	#event handler for start container - call back to listener
 	def onStart(self, event, eventListener):

@@ -118,9 +118,9 @@ class Whaler():
 
 		with open(reportFolder + '/reports.json', 'w') as outfile:
 			try:
-				json.dump(self.reports, outfile)
+				json.dump(self.reports, outfile, skipkeys=True)
 			except Exception as e:
-				logger.info("Failed saving reports to file")
+				logger.info("Failed saving reports to file %s" % e)
 
 if __name__ == '__main__':
 		Whaler().run()

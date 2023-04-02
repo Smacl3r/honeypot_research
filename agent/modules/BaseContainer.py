@@ -85,7 +85,7 @@ class BaseContainer:
 		try:
 			image=container.image
 			outputFile=filePath + '/IMG_' + container.name + '-' + container.id + '.tar'
-			f = open(outputFile, 'w')
+			f = open(outputFile, 'wb')
 
 			for chunk in image.save():
 				f.write(chunk)
@@ -94,10 +94,11 @@ class BaseContainer:
 			logger.debug("{'timestamp':'%s', source':'BaseContainer', 'action':'SavedContainerImage', 'containerId':'%s', 'imageId':'%s', 'file':'%s'}" % (datetime.datetime.now().isoformat(),container.id,image.tags,outputFile))
 		except Exception as e:
 			logger.info("Failed to save image for container [%s]" % container.name)
+			logger.info("Exception: [%s]" % e)
 		
 		try:
 			outputFile=filePath + '/CNT_' + container.name + '-' + container.id + '.tar'
-			f = open(outputFile, 'w')
+			f = open(outputFile, 'wb')
 
 			for chunk in container.export():
 				f.write(chunk)
@@ -105,6 +106,7 @@ class BaseContainer:
 			logger.debug("{'timestamp':'%s', source':'BaseContainer', 'action':'SavedContainer', 'containerId':'%s', 'imageId':'%s', 'file':'%s'}" % (datetime.datetime.now().isoformat(),container.id,image.tags,outputFile))
 		except Exception as e:
 			logger.info("Failed to save container for [%s]" % container.name)
+			logger.info("Exception: [%s]" % e)
 
 	def resetBaselineFileChanges(self):
 		self.baselineChangedFiles = self.getAllFileSystemChanges()

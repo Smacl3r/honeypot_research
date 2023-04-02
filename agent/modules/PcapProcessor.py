@@ -31,7 +31,8 @@ class PcapProcessor:
         if packet.haslayer(DNSRR):
             for i in range(packet[DNS].ancount):
                 dnsrr=packet[DNS].an[i]
-                self.dnsRecords[dnsrr.rdata]=dnsrr.rrname[:-1]
+                self.dnsRecords[dnsrr.rdata]=dnsrr.rrname[:-1].decode('UTF-8')
+        
                 
 
     def isScanningDetected(self):
@@ -62,7 +63,8 @@ class PcapProcessor:
         self.scanningDetected=False
         sniff(offline=self.pcapFilePath, filter="dst net not 172 and tcp or udp", prn=lambda x: self.addContactedIps(x), stop_filter=lambda x: self.isScanningDetected(), store=0)
         
-        for ipAddress in self.contactedIps.keys():
+        tempContactedIps = self.contactedIps.copy()
+        for ipAddress in tempContactedIps.keys():
             #add geo-location data
             try:
                 match = geolite2.lookup(ipAddress.decode('UTF-8'))
@@ -81,19 +83,20 @@ class PcapProcessor:
                 self.contactedIps[ipAddress]['domain']='unknown'
             
             #remove noise from docker and dns
-        #     if ipAddress in ['1.1.1.1', '8.8.8.8']:
-        #         del(self.contactedIps[ipAddress])
-        #     elif self.contactedIps[ipAddress]['domain'].endswith('docker.com'):
-        #         del(self.contactedIps[ipAddress])
-        #         del(self.dnsRecords[ipAddress])
-        #     elif self.contactedIps[ipAddress]['domain'].endswith('docker.io'):
-        #         del(self.contactedIps[ipAddress])
-        #         del(self.dnsRecords[ipAddress])
+            if ipAddress in ['1.1.1.1', '8.8.8.8']:
+                del(self.contactedIps[ipAddress])
+            elif self.contactedIps[ipAddress]['domain'].endswith('docker.com'):
+                del(self.contactedIps[ipAddress])
+                del(self.dnsRecords[ipAddress])
+            elif self.contactedIps[ipAddress]['domain'].endswith('docker.io'):
+                del(self.contactedIps[ipAddress])
+                del(self.dnsRecords[ipAddress])
 
-        # for dnsRecord in self.dnsRecords.keys():
-        #     if self.dnsRecords[dnsRecord].endswith('docker.com') or self.dnsRecords[dnsRecord].endswith('docker.io'):
-        #         del(self.dnsRecords[dnsRecord])
-
+        tempDnsRecords = self.dnsRecords.copy()
+        for dnsRecord in tempDnsRecords.keys():
+            if self.dnsRecords[dnsRecord].endswith('docker.com') or self.dnsRecords[dnsRecord].endswith('docker.io'):
+                del(self.dnsRecords[dnsRecord])
+                
         return report
                 
                     

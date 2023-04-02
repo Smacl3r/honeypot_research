@@ -2,6 +2,7 @@ version: '2'
 services:
   controller:
     container_name: whaler_agent
+    runtime: sysbox-runc
     build: ./agent
     image: whaler/agent
     restart: on-failure

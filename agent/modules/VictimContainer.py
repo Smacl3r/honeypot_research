@@ -25,7 +25,6 @@ class VictimContainer(BaseContainer):
 			container = self.cli.containers.run(	image=Configuration().get("victimContainerImage"),
 													name=Configuration().get("victimContainerName"),
 													network=Configuration().get("victimNetworkName"),
-													privileged=True,  
 													restart_policy={"Name": "on-failure"},
 													ports={'2375/tcp': 2375},
 													detach=True,

@@ -6,8 +6,6 @@ services:
     build: ./agent
     image: whaler/agent
     restart: on-failure
-    expose:
-      - 2375
     environment:
         - WHALER_DATA_DIR=/var/tmp/whaler
         - WHALER_INSTALL_NAME=MyUniqueInstallName

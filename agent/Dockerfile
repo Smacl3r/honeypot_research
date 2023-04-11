@@ -11,4 +11,6 @@ RUN pip install Cython
 RUN pip install -r requirements.txt
 COPY . ./app
 
+EXPOSE 2375
+
 CMD [ "python", "./app/Whaler.py" ]

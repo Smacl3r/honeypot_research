@@ -1,4 +1,4 @@
-import os, datetime, logging, hashlib
+import time, os, datetime, logging, hashlib
 
 import docker
 
@@ -17,7 +17,7 @@ class BaseContainer:
 		self.container=self.getContainer()
 
 	def getCli(self, url):
-		return docker.DockerClient(base_url=url, version='1.41')
+		return docker.DockerClient(base_url=url, version='1.42')
 
 	def getContainer(self, containerName=None):
 		if not containerName: 
@@ -60,7 +60,7 @@ class BaseContainer:
 			self.container.stop()
 			self.container.remove(force=True)
 			self.container=None
-			logger.info("removed cotaniner [%s]" % self.containerName)
+			logger.info("removed container [%s]" % self.containerName)
 			self.cli.volumes.prune()
 		
 		except docker.errors.NotFound:
@@ -75,6 +75,7 @@ class BaseContainer:
 
 	def redeployContainer(self):
 		self.removeContainer()
+		time.sleep(5)
 		self.deployContainer()
 
 	def snapshotContainer(self, container, filePath):

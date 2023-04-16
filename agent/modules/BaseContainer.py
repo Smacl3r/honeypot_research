@@ -17,7 +17,7 @@ class BaseContainer:
 		self.container=self.getContainer()
 
 	def getCli(self, url):
-		return docker.DockerClient(base_url=url, version='1.42')
+		return docker.DockerClient(base_url=url, version='1.41')
 
 	def getContainer(self, containerName=None):
 		if not containerName: 

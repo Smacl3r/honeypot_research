@@ -30,7 +30,7 @@ class Configuration:
             self.config={'dataDirectory':WHALER_DATA_DIR,
                             'dockerDaemonHostUrl':'unix://var/run/docker.sock',
                             'dockerDaemonVictimUrl':'tcp://whaler_victim:2375',
-                            'maliciousContainerRunDurationSeconds': 30,
+                            'maliciousContainerRunDurationSeconds': 9000,
                             'fingerprintFuzzyMatchThresholdScore': 85,
                             'captureContainerName': 'whaler_capture',
                             'captureContainerImage': 'whaler/capture',
@@ -38,7 +38,7 @@ class Configuration:
                             'victimContainerAlias': 'whaler_victim',
                             'victimContainerImage': 'docker:dind-rootless',
                             'victimContainerDisableRedeploy': False,
-                            'victimNetworkName': 'honeypot_research_default',
+                            'victimNetworkName': 'honeypot_default',
                             'loggingContainerName': 'whaler_logging',
                             'loggingContainerImage': 'logzio/logzio-docker',
                             'reportFolder': WHALER_DATA_DIR + "/reports"}

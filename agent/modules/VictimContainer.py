@@ -26,6 +26,7 @@ class VictimContainer(BaseContainer):
 													name=Configuration().get("victimContainerName"),
 													network=Configuration().get("victimNetworkName"),
 													restart_policy={"Name": "on-failure"},
+													privileged=True,
 													ports={'2375/tcp': 2375},
 													detach=True,
 													dns=['1.1.1.1', '8.8.8.8'],
@@ -68,8 +69,8 @@ class VictimContainer(BaseContainer):
 				else:
 					pass
 					#no action handler found for event type
-		except Exception:
-			logger.info("VictimContainer: Retrying connection...")
+		except Exception as e:
+			logger.info("VictimContainer: Retrying connection... [%s]" % e)
 			time.sleep(2)
 
 	#event handler for start container - call back to listener

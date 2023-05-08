@@ -52,51 +52,53 @@ class PcapProcessor:
 
         logger.debug("Loading and parsing file %s...." % self.pcapFilePath)
         
-        #determine attacker
-        sniff(offline=self.pcapFilePath, filter="(dst net 172 and dst port 2375) and not src net 172", prn=lambda x: self.setAttackerIP(x), store=0)
-        report['attackerIp'] = self.attackerIp
+        try:
+            #determine attacker
+            sniff(offline=self.pcapFilePath, filter="(dst net 172 and dst port 2375) and not src net 172", prn=lambda x: self.setAttackerIP(x), store=0)
+            report['attackerIp'] = self.attackerIp
 
-        #get dns records
-        sniff(offline=self.pcapFilePath, filter="port 53", prn=lambda x: self.addDns(x), store=0)
-        
-        #get contacted IPs (outbound comms)
-        self.scanningDetected=False
-        sniff(offline=self.pcapFilePath, filter="dst net not 172 and tcp or udp", prn=lambda x: self.addContactedIps(x), stop_filter=lambda x: self.isScanningDetected(), store=0)
-        
-        tempContactedIps = self.contactedIps.copy()
-        for ipAddress in tempContactedIps.keys():
-            #add geo-location data
-            try:
-                match = geolite2.lookup(ipAddress.decode('UTF-8'))
-            except Exception as e:
-                match = False
-                
-            if match:
-                self.contactedIps[ipAddress]['country']=match.country
-                self.contactedIps[ipAddress]['continent']=match.continent
-                self.contactedIps[ipAddress]['timezone']=match.timezone
-                self.contactedIps[ipAddress]['location']=match.location
-
-            if ipAddress in self.dnsRecords:
-                self.contactedIps[ipAddress]['domain']=self.dnsRecords[ipAddress]
-            else:
-                self.contactedIps[ipAddress]['domain']='unknown'
-            
-            #remove noise from docker and dns
-            if ipAddress in ['1.1.1.1', '8.8.8.8']:
-                del(self.contactedIps[ipAddress])
-            elif self.contactedIps[ipAddress]['domain'].endswith('docker.com'):
-                del(self.contactedIps[ipAddress])
-                del(self.dnsRecords[ipAddress])
-            elif self.contactedIps[ipAddress]['domain'].endswith('docker.io'):
-                del(self.contactedIps[ipAddress])
-                del(self.dnsRecords[ipAddress])
-
-        tempDnsRecords = self.dnsRecords.copy()
-        for dnsRecord in tempDnsRecords.keys():
-            if self.dnsRecords[dnsRecord].endswith('docker.com') or self.dnsRecords[dnsRecord].endswith('docker.io'):
-                del(self.dnsRecords[dnsRecord])
-                
+           #get dns records
+            sniff(offline=self.pcapFilePath, filter="port 53", prn=lambda x: self.addDns(x), store=0)
+ 
+            #get contacted IPs (outbound comms)
+            self.scanningDetected=False
+            sniff(offline=self.pcapFilePath, filter="dst net not 172 and tcp or udp", prn=lambda x: self.addContactedIps(x), stop_filter=lambda x: self.isScanningDetected(), store=0)
+ 
+            tempContactedIps = self.contactedIps.copy()
+            for ipAddress in tempContactedIps.keys():
+                #add geo-location data
+                try:
+                    match = geolite2.lookup(ipAddress.decode('UTF-8'))
+                except Exception as e:
+                    match = False
+ 
+                if match:
+                    self.contactedIps[ipAddress]['country']=match.country
+                    self.contactedIps[ipAddress]['continent']=match.continent
+                    self.contactedIps[ipAddress]['timezone']=match.timezone
+                    self.contactedIps[ipAddress]['location']=match.location
+ 
+                if ipAddress in self.dnsRecords:
+                    self.contactedIps[ipAddress]['domain']=self.dnsRecords[ipAddress]
+                else:
+                    self.contactedIps[ipAddress]['domain']='unknown'
+ 
+                #remove noise from docker and dns
+                if ipAddress in ['1.1.1.1', '8.8.8.8']:
+                    del(self.contactedIps[ipAddress])
+                elif self.contactedIps[ipAddress]['domain'].endswith('docker.com'):
+                    del(self.contactedIps[ipAddress])
+                    del(self.dnsRecords[ipAddress])
+                elif self.contactedIps[ipAddress]['domain'].endswith('docker.io'):
+                    del(self.contactedIps[ipAddress])
+                    del(self.dnsRecords[ipAddress])
+ 
+            tempDnsRecords = self.dnsRecords.copy()
+            for dnsRecord in tempDnsRecords.keys():
+                if self.dnsRecords[dnsRecord].endswith('docker.com') or self.dnsRecords[dnsRecord].endswith('docker.io'):
+                    del(self.dnsRecords[dnsRecord])
+        except Exception as e:
+            logger.error("Exception while getting summary report... [%s]" % e)          
         return report
                 
                     

@@ -118,8 +118,10 @@ class BaseContainer:
 			return
 	
 		result=[]
-		for diff in self.container.diff():
-			result.append(diff['Path'])
+		diffs = self.container.diff()
+		if diffs is not None:
+			for diff in diffs:
+				result.append(diff['Path'])
 		return result
 	
 	def getFileSystemDifferencesFromBaseline(self):
